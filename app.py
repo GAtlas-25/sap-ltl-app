@@ -6,7 +6,7 @@ import io
 # -----------------------------------------------------------
 # Load LTL Qty file (pre-loaded in your system)
 # -----------------------------------------------------------
-LTL_QTY_PATH = "/Users/giovannighedini/Desktop/ATLAS/AI_Automation/SAP_cleaning/LTL_qty.xlsx"
+LTL_QTY_PATH = "LTL_qty.xlsx"
 
 @st.cache_data
 def load_ltl_qty():
