@@ -34,6 +34,8 @@ def process_order_export(files, ltl_qty_df):
         how='inner'
     )
 
+    df_LTL = df_orders.copy()
+
     # Filter LTL orders -- needs to be done after grouping by PO
     #df_LTL = df_orders[
         #(df_orders['Order Quantity'] >= df_orders['LTL Qty']) |
