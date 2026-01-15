@@ -52,7 +52,8 @@ def process_order_export(files, ltl_qty_df):
         'Material',
         'Order Quantity',
         'Gross weight',
-        'Case_Pallet'
+        'Case_Pallet',
+        'LTL Qty'
     ]
 
     df_LTL_clean = df_LTL[columns].copy()
