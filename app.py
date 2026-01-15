@@ -34,11 +34,11 @@ def process_order_export(files, ltl_qty_df):
         how='inner'
     )
 
-    # Filter LTL orders
-    df_LTL = df_orders[
-        (df_orders['Order Quantity'] >= df_orders['LTL Qty']) |
-        (df_orders['LTL Qty'].isna() == True)
-    ]
+    # Filter LTL orders -- needs to be done after grouping by PO
+    #df_LTL = df_orders[
+        #(df_orders['Order Quantity'] >= df_orders['LTL Qty']) |
+        #(df_orders['LTL Qty'].isna() == True)
+    #]
 
     # Convert weight to Pounds
     df_LTL['Gross weight'] = df_LTL['Gross weight'] * 2.20462
@@ -64,6 +64,7 @@ def process_order_export(files, ltl_qty_df):
             'Order Quantity': 'sum',
             'Gross weight': 'sum',
             'Case_Pallet': 'min',
+            'LTL Qty': 'min',
             **{
                 col: 'first'
                 for col in df_LTL_clean.columns
@@ -71,6 +72,15 @@ def process_order_export(files, ltl_qty_df):
             }
         })
     )
+
+     # Filter LTL orders
+    df_LTL_grouped = df_LTL_grouped[
+        (df_LTL_grouped['Order Quantity'] >= df_LTL_grouped['LTL Qty']) |
+        (df_LTL_grouped['LTL Qty'].isna() == True)
+    ]
+
+    # Drop LTL Qty columns
+    df_LTL_grouped = df_LTL_grouped.drop(columns=['LTL Qty'])
 
     # Pallet quantity
     df_LTL_grouped['Pallet_qty'] = np.ceil(
