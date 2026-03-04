@@ -25,6 +25,9 @@ def process_order_export(files, ltl_qty_df):
 
     df_order_export = pd.concat(dfs, ignore_index=True)
 
+    # Filter out RDC orders
+    df_order_export = df_order_export[~df_order_export['Name 1'].str.contains('RDC')]
+
     # Merge with LTL Qty file
     df_orders = pd.merge(
         df_order_export,
